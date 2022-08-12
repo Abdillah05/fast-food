@@ -1,32 +1,45 @@
 import { useState } from "react"
 
+
 function PizzaBlock(props) {
-    const[countProduct, setCountProduct] = useState(0)
-    const addProductHandler = () => {
-        setCountProduct(countProduct + 1)
-    }
+    const [activeType, setActivType] = useState(0)
+    const [activeSize, setActivSize] = useState(0)
+    const typeNames = ["тонкое", "традиционное"]
     return (
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                src={props.imageUrl}
                 alt="Pizza"
             />
             <h4 className="pizza-block__title">{props.title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
+                    {
+                        props.types.map((typeId) => (
+                            <li
+                                key={typeId}
+                                onClick={() => setActivType(typeId)}
+                                className={activeType === typeId ? "active" : ""} >
+                                {typeNames[typeId]}
+                            </li>))
+                    }
                 </ul>
                 <ul>
-                    <li className="active">26 см.</li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
+                    {
+                        props.sizes.map((size, i) => (
+                            <li
+                                key={size}
+                                onClick={() => setActivSize(i)}
+                                className={activeSize === i ? 'active' : ''}>
+                                {size} см.
+                            </li>))
+                    }
                 </ul>
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">{props.price} ₽</div>
-                <button onClick={addProductHandler} className="button button--outline button--add">
+                <button className="button button--outline button--add">
                     <svg
                         width="12"
                         height="12"
@@ -40,7 +53,7 @@ function PizzaBlock(props) {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>{countProduct}</i>
+                    <i>0</i>
                 </button>
             </div>
         </div>
