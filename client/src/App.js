@@ -1,38 +1,23 @@
-import React from 'react'
-import Categories from './components/categories/categories';
+import React, { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom';
 import Header from './components/header/header';
-import PizzaBlock from './components/pizzaBlock/pizzaBlock';
-import Sort from './components/sort/sort';
-import pizzas from './assets/pizzas.json'
+import Cart from './components/pages/cart';
+import Home from './components/pages/home';
+import NotFound from './components/pages/notFound';
+
 
 function App() {
-  console.log(pizzas);
+const [serchValue, setSerchValue] = useState('')
   return (
     <>
       <div className="wrapper">
-        <Header />
+            <Header  serchValue={serchValue} setSerchValue={setSerchValue} />
         <div className="content">
-          <div className="container">
-            <div className="content__top">
-              <Categories />
-              <Sort />
-            </div>
-            <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-              {
-                pizzas.map((obj) => (
-                  <PizzaBlock 
-                  key={obj.id}
-                  title={obj.title} 
-                  price={obj.price} 
-                  sizes={obj.sizes}
-                  imageUrl={obj.imageUrl}
-                  types={obj.types}
-                  />
-                ))
-              }
-            </div>
-          </div>
+            <Routes>
+              <Route path='/' element={<Home serchValue={serchValue} setSerchValue={setSerchValue}/>} />
+              <Route path='/cart' element={<Cart/>} />
+              <Route path='*' element={<NotFound/>} />
+            </Routes>
         </div>
       </div>
     </>
