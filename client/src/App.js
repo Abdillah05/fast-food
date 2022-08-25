@@ -6,12 +6,14 @@ import Home from './components/pages/home';
 import NotFound from './components/pages/notFound';
 
 
+export  const SearchContext = React.createContext();
 function App() {
-const [serchValue, setSerchValue] = useState('')
+const [serchValue, setSerchValue] = useState('');
   return (
     <>
       <div className="wrapper">
-            <Header  serchValue={serchValue} setSerchValue={setSerchValue} />
+        <SearchContext.Provider value={{serchValue, setSerchValue}}>
+            <Header/>
         <div className="content">
             <Routes>
               <Route path='/' element={<Home serchValue={serchValue} setSerchValue={setSerchValue}/>} />
@@ -19,6 +21,7 @@ const [serchValue, setSerchValue] = useState('')
               <Route path='*' element={<NotFound/>} />
             </Routes>
         </div>
+        </SearchContext.Provider>
       </div>
     </>
   );
