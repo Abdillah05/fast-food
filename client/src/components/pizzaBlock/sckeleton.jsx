@@ -5,8 +5,8 @@ const Sckeleton = (props) => (
     <ContentLoader
         className="pizza-block"
         speed={2}
-        width={500}
-        height={600}
+        width={400}
+        height={500}
         viewBox="0 0 500 600"
         backgroundColor="#f3f3f3"
         foregroundColor="#ecebeb"
