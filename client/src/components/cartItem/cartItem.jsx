@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { addItem, minusItem, removeItem } from "../../redux/slices/cartSlice";
 
-const CartItem = ({id, title, type, price, imageUrl,count}) => {
+const CartItem = ({id, title, type, size, price, imageUrl,count}) => {
     const dispatch = useDispatch()
 
     const onClickPlus = () =>{
@@ -26,7 +26,7 @@ const CartItem = ({id, title, type, price, imageUrl,count}) => {
                         </div>
                         <div className="cart__item-info">
                             <h3>{title}</h3>
-                            <p>{type}, 26 см.</p>
+                            <p>{type}, {size} см.</p>
                         </div>
                         <div className="cart__item-count">
                             <div 
