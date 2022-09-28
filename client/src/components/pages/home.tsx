@@ -8,11 +8,11 @@ import Sckeleton from '../pizzaBlock/sckeleton';
 import Sort, { sortList } from '../sort/sort';
 import { filterSelector, setCategoryId, setCurrentPage, setFilters } from '../../redux/slices/filterSlice'
 import qs from 'qs'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchPizzas, pizzaDataSelector } from '../../redux/slices/pizzaSlice';
 
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {items, status} = useSelector(pizzaDataSelector)
@@ -25,12 +25,12 @@ const Home = () => {
   
   
   
-const onChangeCategory = (id) => {
+const onChangeCategory = (id:number) => {
   dispatch(setCategoryId(id))
 }
 
-const onChangePage = (number) => {
- dispatch(setCurrentPage(number)) 
+const onChangePage = (page: number) => {
+ dispatch(setCurrentPage(page)) 
 }
 
 const getPizzas = async () => {
@@ -41,7 +41,9 @@ const getPizzas = async () => {
   const search = searchValue ? `search=${searchValue}`:'';
   
                      
-         dispatch(fetchPizzas({
+         dispatch(
+           //@ts-ignore
+          fetchPizzas({
           sortBy,
           order,
           category,
@@ -93,12 +95,12 @@ useEffect(() => {
 
   
 const sceletons = [...new Array(6)].map((_, index) => <Sckeleton key={index} />)
-const pizzas = items.filter((obj) => {
+const pizzas = items.filter((obj:any) => {
   if(obj.title.toLowerCase().includes(searchValue.toLowerCase())){
    return true 
   } 
   return false
- }).map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+ }).map((obj:any) =><Link key={obj.id} to={`/pizza/${obj.id}`} ><PizzaBlock {...obj} /></Link> )
   return (
     <div className="container">
       <div className="content__top">

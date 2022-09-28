@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { setSort, sortSelector } from "../../redux/slices/filterSlice";
 
-export const sortList = [
+type SortItem = {
+  name: string;
+  sortProperty:string;
+} //создаем кастомный тип и передаем его в sortList
+
+export const sortList:SortItem[] = [
   { name: "популярности(DESC)", sortProperty: "raiting" },
   { name: "популярности(ASC)", sortProperty: "-raiting" },
   { name: "цене(DESC)", sortProperty: "price" },
@@ -10,20 +15,20 @@ export const sortList = [
   { name: "алфавиту(DESC)", sortProperty: "title" },
   { name: "алфавиту(ASC)", sortProperty: "-title" }
 ];
-function Sort() {
+const Sort:React.FC = () => {
 
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const sort = useSelector(sortSelector)
-  const sortRef = useRef()
+  const sortRef = useRef<HTMLDivElement>(null)
 
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj:SortItem) => {
     dispatch(setSort(obj))
     setOpen(false);
   }
 
   useEffect(() => {
-const handleClickOutside = (event) => {
+const handleClickOutside = (event: React.MouseEvent<HTMLBodyElement>) => {
   if(!event.path.includes(sortRef.current)){
     setOpen(false)      }
 }
@@ -35,7 +40,6 @@ const handleClickOutside = (event) => {
     
   },[])
 
-  console.log(sortRef);
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
