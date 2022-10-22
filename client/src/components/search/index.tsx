@@ -9,7 +9,7 @@ const Search:React.FC = () => {
         const dispatch = useDispatch()
         const [value, setValue] = useState('')
         const inputRef = useRef<HTMLInputElement>(null);
-        const searchValue = useSelector(state => state.filter.searchValue)
+        const searchValue = useSelector((state: any) => state.filter.searchValue)
         
         const onClickClear = () => {
         dispatch(setSearchValue(''));

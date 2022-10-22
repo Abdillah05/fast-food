@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { setSort, sortSelector } from "../../redux/slices/filterSlice";
+import { setSort, SortPropertyEnum, sortSelector } from "../../redux/slices/filterSlice";
 
 type SortItem = {
   name: string;
-  sortProperty:string;
+  sortProperty:SortPropertyEnum;
 } //создаем кастомный тип и передаем его в sortList
 
 export const sortList:SortItem[] = [
-  { name: "популярности(DESC)", sortProperty: "raiting" },
-  { name: "популярности(ASC)", sortProperty: "-raiting" },
-  { name: "цене(DESC)", sortProperty: "price" },
-  { name: "цене(ASC)", sortProperty: "-price" },
-  { name: "алфавиту(DESC)", sortProperty: "title" },
-  { name: "алфавиту(ASC)", sortProperty: "-title" }
+  { name: "популярности(DESC)", sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: "популярности(ASC)", sortProperty: SortPropertyEnum.RATING_ASC },
+  { name: "цене(DESC)", sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: "цене(ASC)", sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: "алфавиту(DESC)", sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: "алфавиту(ASC)", sortProperty: SortPropertyEnum.TITLE_ASC }
 ];
-const Sort:React.FC = () => {
+const SortPopUp:React.FC = () => {
 
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
@@ -28,8 +28,11 @@ const Sort:React.FC = () => {
   }
 
   useEffect(() => {
-const handleClickOutside = (event: React.MouseEvent<HTMLBodyElement>) => {
-  if(!event.path.includes(sortRef.current)){
+const handleClickOutside = (event: MouseEvent) => {
+  const _event = event as MouseEvent & {
+    path: Node[];
+  }
+  if(sortRef.current && !_event.path.includes(sortRef.current)){
     setOpen(false)      }
 }
 
@@ -74,4 +77,4 @@ const handleClickOutside = (event: React.MouseEvent<HTMLBodyElement>) => {
     </div>
   )
 }
-export default Sort
+export default SortPopUp
