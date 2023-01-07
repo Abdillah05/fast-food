@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Categories from '../categories/categories';
 import axios from 'axios';
@@ -28,9 +28,9 @@ const Home: React.FC = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -100,7 +100,7 @@ const Home: React.FC = () => {
       }
       return false;
     })
-    .map((obj: any) => <PizzaBlock {...obj} />);
+    .map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   return (
     <div className="container">
       <div className="content__top">
